@@ -1,0 +1,90 @@
+{% extends 'index.html' %}
+{% load static%}
+{% block content %}
+<section class="chan">
+  <div class="rot-products">
+    <div class="rot-item egg"></div>
+    <div class="rot-item coffee"></div>
+    <div class="rot-item milk"></div>
+  </div>
+  <div class="jackie">
+    <img src="{% static 'assets/chan.png' %}" alt="">
+  </div>
+  <div class="rot-products">
+    <div class="rot-item doshik"></div>
+    <div class="rot-item water"></div>
+    <div class="rot-item banana"></div>
+  </div>
+</section>
+<section class="search">
+  <form action="">
+    <label for="category">Category</label>
+    <select name="category" id="category">
+      <option value=""></option>
+      <option value="">All</option>
+      {% for i in categories %}
+      <option value="?q={{i.name}}">{{i.name}}</option>
+      {% endfor %}
+    </select>
+    <label for="category">Price</label>
+    <select  name="price" id="price">
+      <option value=""></option>
+      <option value="">Standart</option>
+      <option value="high-low">From high to low</option>
+      <option value="low-high">From low to high</option>
+    </select>
+  </form>
+  <div>
+    <h1>Find <span>whatever</span> you need</h1>
+  </div>
+</section>
+<section class="products">
+  {% for product in products %}
+  <div class="product-card">
+    <span>{{product.name}}</span>
+    <img src="{{product.image.url}}" alt="product">
+    <div>
+      <span>{{product.price}}$</span>
+      {% if request.user.is_superuser %}
+      <a href="delete/">Delete</a>
+      <a href="edit/">Edit</a>
+      {% else %}
+      <a href="cart/">
+        <img src="{%static 'assets/add.svg'%}" alt="add">
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</section>
+<section class="products">
+  {% for pack in packs %}
+  <div class="product-card">
+    <span>{{pack.name}}</span>
+    {{pack.include.name}}
+    <div>
+      <span>{{pack.price}}$</span>
+      {% if request.user.is_superuser %}
+      <a href="delete/">Delete</a>
+      <a href="edit/">Edit</a>
+      {% else %}
+      <a href="cart/">
+        <img src="{%static 'assets/add.svg'%}" alt="add">
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</section>
+<section class="cart">
+  <div>
+    <h1>Check what’s in your <span>Cart</span></h1>
+    <a id="cartLink" href="/cart" class="auth-btn auth-btn-red">Go to cart </a>
+  </div>
+  <div>
+    <img id="cart" src="{% static 'assets/cart.png' %}" alt="">
+  </div>
+</section>
+<script src="{% static 'js/script.js' %}"></script>
+
+{% endblock %}

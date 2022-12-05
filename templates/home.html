@@ -1,0 +1,90 @@
+{% extends 'index.html' %}
+{% load static%}
+{% block content %}
+<section>
+  <div class="packs">
+    <div class="main-pack">
+      <span class="title">Student pack</span>
+      <div class="info">
+        <img src="{% static 'assets/student.png' %}" alt="img">
+        <div>
+          <div class="items">
+            <span>Water</span>
+            <span>Doshik</span>
+            <span>Bananas</span>
+            <span>Coffee</span>
+          </div>
+          <div class="price">7$</div>
+        </div>
+      </div>
+      <a class="add" href="student/add">Add to cart</a>
+    </div>
+    <div class="  -packs">
+      <div class="s-pack">
+        <span class="title">Party pack</span>
+        <div class="price">513$</div>
+      </div>
+      <div class="s-pack">
+        <span class="title">Family pack</span>
+        <div class="price">166$</div>
+      </div>
+      <div class="s-pack">
+        <span class="title">Luxery pack</span>
+        <div class="price">1123$</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="greet-block">
+    <h1><span class="highlight">Atlas</span> shop - your daily products <span class="highlight">supplier</span></h1>
+    <a class="head-link" href="catalog/">
+      Explore products
+    </a>
+    <div class="auth-block">
+      <a href="/sign-in" class="auth-btn auth-btn-white">Sign in</a>
+      <a href="/sign-up" class="auth-btn auth-btn-red">Sign up </a>
+    </div>
+  </div>
+</section>
+<section class="cart">
+  <div>
+    <h1>Check what’s in your <span>Cart</span></h1>
+    <a id="cartLink" href="/cart" class="auth-btn auth-btn-red">Go to cart </a>
+  </div>
+  <div>
+    <img id="cart" src="{% static 'assets/cart.png' %}" alt="">
+  </div>
+</section>
+<section class="feedback">
+  <h1>We appraciate every <span>feedback</span> from our customers</h1>
+  <div class="slider" data-slider="itc-slider" data-loop="true" data-autoplay="true" data-interval="5000">
+    <div class="slider__wrapper">
+      <div class="slider__items">
+        {% for i in feedback %}
+        <div class="slider__item">
+          <div class="comment">
+            <p>{{i.body}}</p>
+            <span>{{i.author}}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <button class="slider__control" data-slide="prev"></button>
+    <button class="slider__control" data-slide="next"></button>
+  </div>
+</section>
+<section class="join">
+  <div>
+    <img src="{% static 'assets/depp.png' %}" alt="johnny depp">
+  </div>
+  <div>
+    <h1>Join our <span>community</span></h1>
+    <div class="auth-block">
+      <a href="/sign-in" class="auth-btn auth-btn-2 auth-btn-white">Sign in</a>
+      <a href="/sign-up" class="auth-btn auth-btn-2 auth-btn-red">Sign up </a>
+    </div>
+  </div>
+</section>
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

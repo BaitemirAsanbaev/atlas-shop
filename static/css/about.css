@@ -1,0 +1,53 @@
+.about div:first-child{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 400px;
+}
+
+.about div:first-child img{
+  animation: about 1s infinite ease-in-out;
+  cursor: pointer;
+}
+.about div:first-child span{
+  transition: .5s;
+  text-align: justify;
+  line-height: 0;
+  opacity: 0;
+}
+.guest-comment{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 300px;
+}
+.guest-comment h1{
+  font-size: 32px;
+}
+.guest-comment div a:first-child{
+  margin-right: 20px;
+}
+
+.send-comment{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin: auto;
+}
+.send-comment h1{
+  font-size: 36px;
+}
+.send-comment input{
+  height: 60px;
+  width: 400px;
+  font-size: 20px;
+  margin: 20px 0;
+}
+.send-comment form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

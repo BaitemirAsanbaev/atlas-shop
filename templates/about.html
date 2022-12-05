@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+{% load static%}
+{% block content %}
+<section class="about">
+  <div>
+    <img id="aboutlogo" src="{% static 'assets/about-logo.svg' %}" alt="about-logo">
+    <span id="aboutspan">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum labore dignissimos, alias ut
+      commodi eaque beatae. Ea tempore illum ad amet soluta! Nesciunt autem voluptatibus voluptatem consequatur numquam.
+      Vel, voluptatem.
+      Mollitia, rerum! Laboriosam, aliquid et? Fugit, voluptatem? Provident, quidem. Amet enim velit, magni accusamus
+      officia ratione quo unde. Rem odio architecto natus facere aperiam beatae modi accusantium laudantium voluptates
+      eum.
+      Aspernatur tempora accusantium iusto, quae atque debitis. Impedit hic assumenda culpa explicabo quod repellendus
+      molestias sunt, quam veniam pariatur nemo nam ratione laborum, aliquid eum, dignissimos iure quia aut animi?
+      Cumque deleniti, saepe optio voluptate corporis sit possimus dicta, accusantium rem dolorum hic eaque. Non ullam
+      saepe quis neque, voluptas vitae odit, nemo blanditiis quaerat in error aspernatur asperiores dicta?
+      Rem, officiis. Quos animi hic exercitationem repellendus officia veritatis voluptate id est quibusdam iure
+      provident vel, et omnis quisquam corporis perferendis. Iusto velit laudantium aperiam! Cum sunt non porro
+      iure.</span>
+  </div>
+  <div>
+    <img src="{% static 'assets/tom.png' %}" alt="tom">
+  </div>
+</section>
+<section class="comment">
+  {% if request.user.is_authenticated %}
+  <div class="send-comment">
+    <h1>Your autograph</h1>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <input type="text" name="comment" id="comment"/>
+      <input type="submit" value="Send as @{{request.user}}" class="auth-btn auth-btn-white">
+    </form>
+  </div>
+  {% else %}
+  <div class="guest-comment">
+    <h1><span>Log in</span> to leave comments</h1>
+    <div>
+      <a href="/sign-in" class="auth-btn auth-btn-2 auth-btn-white">Sign in</a>
+      <a href="/sign-up" class="auth-btn auth-btn-2 auth-btn-red">Sign up </a>
+    </div>
+  </div>
+  {% endif %}
+
+</section>
+
+<script>
+  let opened = true
+  let about_img = document.querySelector('#aboutlogo')
+  let about_span = document.querySelector('#aboutspan')
+
+  about_img.addEventListener('click', () => {
+    if (!opened) {
+
+      about_span.style.opacity = '0'
+      about_span.style.lineHeight = '0'
+      opened = true
+    }
+    else{
+      about_span.style.opacity = '1'
+      about_span.style.lineHeight = '1.5'
+      opened = false
+    }
+
+  })
+</script>
+
+{% endblock %}
