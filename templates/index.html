@@ -11,9 +11,11 @@
   <link rel="stylesheet" href="{% static 'css/login.css' ? now 'U'  %}">
   <link rel="stylesheet" href="{% static 'css/about.css' ? now 'U'  %}">
   <link rel="stylesheet" href="{% static 'css/profile.css' ? now 'U'  %}">
+  <link rel="stylesheet" href="{% static 'css/cart.css' ? now 'U'  %}">
   <title>Welcome</title>
 </head>
-<body>  
+<body>
+  <img src="{% static 'assets/anchor.svg' %}" id="anchor" alt="anchor">
   <header>
     <div class="container">
       <div>
@@ -26,6 +28,7 @@
           <li><a href="/about/">About</a></li>
           {% if request.user.is_superuser %}
           <li><a href="/create/">Add product</a></li>
+          <li><a href="/create-pack/">Add pack</a></li>
           {% endif %}
         </ul>
       </nav>
@@ -74,5 +77,8 @@
   </footer>
 
   <script src="{% static 'js/slider.js' %}"></script>
+  <script src="{% static 'js/anchor.js' %}"></script>
+  <script src="{% static 'js/cart.js' %}"></script>
+  <script src="{% static 'js/filter.js' %}"></script>
 </body>
 </html>

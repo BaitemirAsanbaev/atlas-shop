@@ -28,3 +28,9 @@
 .profile{
   margin-top: 50px;
 }
+#switch{
+  transition: .5s;
+}
+#switch:hover{
+  color: #FF4C4C;
+}

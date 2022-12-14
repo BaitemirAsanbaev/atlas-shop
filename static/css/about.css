@@ -1,3 +1,22 @@
+@keyframes about {
+  0%{
+    box-shadow: 10px 10px #ffffff;
+  }
+  25%{
+    box-shadow: -10px 10px #ffffff;
+  }
+  50%{
+    box-shadow: -10px -10px #ffffff;
+  }
+  75%{
+    box-shadow: 10px -10px #ffffff;
+  }
+  100%{
+    box-shadow: 10px 10px #ffffff;
+  }
+
+  
+}
 .about div:first-child{
   display: flex;
   flex-direction: column;
@@ -6,8 +25,13 @@
 }
 
 .about div:first-child img{
-  animation: about 1s infinite ease-in-out;
+  border-radius: 20px;
+  animation: about 3s infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
   cursor: pointer;
+  transition: .5s;
+}
+.about img:first-child:hover{
+  filter: brightness(80%);
 }
 .about div:first-child span{
   transition: .5s;

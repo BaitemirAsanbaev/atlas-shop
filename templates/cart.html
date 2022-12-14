@@ -1,12 +1,29 @@
 {% extends 'index.html' %}
 {% load static%}
 {% block content %}
-<section>
-  <h1>Cart</h1>
-  {% for i in cart %}
-  <div>
-    {{i.user}}
+
+<h1 class="cart-title">Cart</h1>
+<section class="cart">
+  <div class="cart-list">
+
+    {% for i in cart %}
+    {% if not i %}
+    <span>Nothing yet...</span>
+    {% endif %}
+    <div class="item">
+      {% for j in i.products.all %}
+      <form action="" method="POST">
+        {% csrf_token %}
+        <span>{{j.name}}</span>
+        <span>{{j.price}}$</span>
+        <input style="display: none;" type="number" name="del" id="del" value="{{i.id}}">
+        <button type="submit">Delete</button>
+      </form>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    <a class="auth-btn auth-btn-red" href="{% url 'clear' %}">Order</a>
   </div>
-  {% endfor %}
+  <img src="{% static 'assets/robert.png' %}" alt="robert">
 </section>
 {% endblock %}

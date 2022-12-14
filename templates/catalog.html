@@ -40,53 +40,54 @@
 </section>
 <section class="products">
   {% for product in products %}
-  <div class="product-card">
-    <span>{{product.name}}</span>
-    <img src="{{product.image.url}}" alt="product">
-    <div>
-      <span>{{product.price}}$</span>
-      {% if request.user.is_superuser %}
-      <a href="delete/{{product.id}}">Delete</a>
-      <a href="update/{{product.id}}">Edit</a>
-      {% else %}
-      {% if product.is_ordered %}
-      <img style="filter: brightness(50%);" src="{%static 'assets/add.svg'%}" alt="add">
-      {% else %}
-      <a href="cart/">
-        <img src="{%static 'assets/add.svg'%}" alt="add">
-      </a>
-      {% endif %}
-      {% endif %}
+  <form action="" method="POST">
+    {% csrf_token %}
+    <div class="product-card">
+      <span>{{product.name}}</span>
+      <img src="{{product.image.url}}" alt="product">
+      <div>
+        <span>{{product.price}}$</span>
+        {% if request.user.is_superuser %}
+        <a href="delete/{{product.id}}">Delete</a>
+        <a href="update/{{product.id}}">Edit</a>
+        {% else %}
+        {% if product.is_ordered %}
+        <img style="filter: brightness(50%);" src="{%static 'assets/add.svg'%}" alt="add">
+        {% else %}
+        <input style="display: none;" type="number" name="prod" id="prod" value="{{product.id}}">
+        <button type="submit">
+          <img src="{%static 'assets/add.svg'%}" alt="add">
+        </button>
+        {% endif %}
+        {% endif %}
+      </div>
     </div>
-  </div>
+  </form>
   {% endfor %}
 </section>
-<section class="products">
+<section class="products packs-list">
   {% for pack in packs %}
   <div class="product-card">
-      <span>{{pack.name}}</span>
-    <div>
-
-      <div>
-        <img src="{{pack.image.url}}" alt="alt">
-      </div>
-      <div>
-        {% for i in pack.products.all %}
-        <p>
-          {{i}}
-        </p>
-        {% endfor %}
-      </div>
+    <span>{{pack.name}}</span>
+    <div class="prd-list">
+      {% for i in pack.products.all %}
+      <p>
+        {{i}}
+      </p>
+      {% endfor %}
     </div>
     <div>
       <span>{{pack.price}}$</span>
       {% if request.user.is_superuser %}
-      <a href="delete/">Delete</a>
-      <a href="edit/">Edit</a>
+      <a href="delete-pack/{{pack.id}}">Delete</a>
+      <a href="update-pack/{{pack.id}}">Edit</a>
       {% else %}
-      <a href="cart/">
-        <img src="{%static 'assets/add.svg'%}" alt="add">
-      </a>
+      <form method='POST'>
+        {% csrf_token %}
+        <button type="submit">
+          <img src="{%static 'assets/add.svg'%}" alt="add">
+        </button>
+      </form>
       {% endif %}
     </div>
   </div>
@@ -101,6 +102,5 @@
     <img id="cart" src="{% static 'assets/cart.png' %}" alt="">
   </div>
 </section>
-<script src="{% static 'js/script.js' %}"></script>
 
 {% endblock %}

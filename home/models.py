@@ -23,7 +23,6 @@ class Products(models.Model):
 class Pack(models.Model):
     name = models.CharField(max_length=100, null=True)
     products = models.ManyToManyField(Products, blank=True)
-    image = models.ImageField(upload_to="", null=True)
     price = models.PositiveIntegerField(null=True)
 
     def get_products(self):
@@ -43,8 +42,6 @@ class Feedback(models.Model):
 
 class Cart(models.Model):
     client = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    products = models.ManyToManyField(Products, blank=True, related_name='products')
-    def get_products(self):
-        return self.products.all()
+    products = models.ManyToManyField(Products, blank=True)
     def __str__(self):
-        return str(self.id)
+        return str(self.client)

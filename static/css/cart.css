@@ -1,0 +1,31 @@
+.cart-title{
+  text-align: center;
+  font-size: 54px;
+  font-weight: normal;
+}
+.cart-list{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border: 2px solid #ff4c4c;
+  padding: 20px;
+}
+.item form{
+  display: flex;
+  border: 2px solid #ff4c4c;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 20px;
+  height: 120px;
+  margin: 20px;
+}
+.item span{
+}
+.item button{
+  background-color: #ff4c4c;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+
+}

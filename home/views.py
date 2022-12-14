@@ -11,7 +11,7 @@ from django.views import generic
 
 def index(request):
     feedback = models.Feedback.objects.all()
-    packs= models.Pack.objects.all()
+    packs = models.Pack.objects.all()
     data = {
         'feedback': feedback,
         'packs': packs
@@ -20,20 +20,24 @@ def index(request):
 
 
 def catalog(request):
-  q = request.GET.get('q') if request.GET.get('q') != None else ''
-  products = models.Products.objects.filter(category__name__icontains=q)
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    products = models.Products.objects.filter(category__name__icontains=q)
+    new_packs = []
+    categories = models.Category.objects.all()
+    packs = models.Pack.objects.all()
+    for i in packs:
+        new_packs.append(i)
 
-  new_packs = []
-  categories = models.Category.objects.all()
-  packs = models.Pack.objects.all()
-  for i in packs:
-    new_packs.append(i)
-  data = {
-      'products': products,
-      'categories': categories,
-      'packs': new_packs,
-  }
-  return render(request, 'catalog.html', data)
+    if request.method == 'POST':
+        cart_obj = models.Cart.objects.create(client=request.user)
+        added = models.Products.objects.filter(id=request.POST.get('prod'))
+        cart_obj.products.set(added)
+    data = {
+        'products': products,
+        'categories': categories,
+        'packs': new_packs,
+    }
+    return render(request, 'catalog.html', data)
 
 # def add_product(request):
 #     form = forms.ProductForm
@@ -43,7 +47,9 @@ def catalog(request):
 #             form.save()
 #             return redirect('catalog')
 #     return render(request, 'create.html', {'form': form})
-#классовый
+# классовый
+
+
 class ProductCreate(generic.CreateView):
     template_name = 'create.html'
     form_class = forms.ProductForm
@@ -53,6 +59,18 @@ class ProductCreate(generic.CreateView):
     def form_valid(self, form):
         print(form.cleaned_data)
         return super(ProductCreate, self).form_valid(form=form)
+
+
+class PackCreate(generic.CreateView):
+    template_name = 'create.html'
+    form_class = forms.PackForm
+    queryset = models.Pack.objects.all()
+    success_url = '/catalog/'
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super(PackCreate, self).form_valid(form=form)
+
 
 def update_product(request, id):
     product = models.Products.objects.get(id=id)
@@ -64,12 +82,30 @@ def update_product(request, id):
             return redirect('catalog')
     return render(request, 'update.html', {'form': form})
 
+def update_pack(request, id):
+    pack = models.Pack.objects.get(id=id)
+    form = forms.PackForm(instance=pack)
+    if request.method == 'POST':
+        form = forms.PackForm(request.POST, instance=pack)
+        if form.is_valid():
+            form.save()
+            return redirect('catalog')
+    return render(request, 'update.html', {'form': form})
+
+
 def delete_product(request, id):
     product = models.Products.objects.get(id=id)
     if request.method == 'POST':
         product.delete()
         return redirect('catalog')
     return render(request, 'delete.html', {'obj': product})
+
+def delete_pack(request, id):
+    pack = models.Pack.objects.get(id=id)
+    if request.method == 'POST':
+        pack.delete()
+        return redirect('catalog')
+    return render(request, 'delete.html', {'obj': pack})
 
 
 def from_low_to_high(request):
@@ -107,11 +143,12 @@ def from_high_to_low(request):
 
 
 def about(request):
-  if request.method == 'POST':
-    models.Feedback.objects.create(author = request.user.first_name, body = request.POST.get('comment'))
-    return redirect('home')
+    if request.method == 'POST':
+        models.Feedback.objects.create(
+            author=request.user.first_name, body=request.POST.get('comment'))
+        return redirect('home')
 
-  return render(request, 'about.html')
+    return render(request, 'about.html')
 
 
 def logout_user(request):
@@ -150,7 +187,7 @@ def sign_up(request):
             user.username = user.username.lower()
             user.save()
             login(request, user)
-            return redirect('fill')
+            return redirect('home')
         else:
             messages.error(request, 'Error occured')
     return render(request, 'login.html', {'form': form})
@@ -160,19 +197,41 @@ def sign_up(request):
 def profile(request):
     return render(request, 'profile.html')
 
+
 @login_required(login_url='sign-in')
 def edit_profile(request):
     user = request.user
-    form = forms.SignUpForm(instance=user)
+    form = forms.EditForm(instance=user)
     if request.method == 'POST':
-        form = forms.SignUpForm(request.POST, instance=user)
+        form = forms.EditForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             return redirect('profile')
-    return render(request, 'edit.html', {'form':form})
+    return render(request, 'edit.html', {'form': form})
 
 
 @login_required(login_url='sign-in')
 def cart(request):
-    cart = models.Cart.objects.get(client = request.user)
-    return render(request, 'cart.html', {'cart':cart})
+    cart = models.Cart.objects.all()
+    new_cart = []
+    for item in cart:
+        if item.client == request.user:
+            new_cart.insert(0, item)
+    if request.method == 'POST':
+        current_cart = models.Cart.objects.get(id=request.POST.get('del'))
+        current_cart.delete()
+    data={
+        'cart': new_cart,
+        'not_null': len(new_cart)
+    }
+
+    return render(request, 'cart.html', data)
+
+@login_required(login_url='sign-in')
+def clear(request):
+    cart = models.Cart.objects.all()
+    
+    for item in cart:
+        if request.user == item.client:
+            item.delete()
+    return redirect('home')

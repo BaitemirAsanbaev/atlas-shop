@@ -17,10 +17,10 @@
   cursor: pointer;
   transition: .5s;
 }
-.login form input:last-child:hover{
+/* .login form input:last-child:hover{
   color: #fff;
   border-color: #fff;
-}
+} */
 #switch{
   cursor: pointer;
 }

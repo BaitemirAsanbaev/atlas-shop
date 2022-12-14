@@ -2,30 +2,8 @@
 {% load static%}
 {% block content %}
 <section>
-  <div class="packs">
-    {% for pack in packs %}
-    <div class="product-card pack-card">
-      <span>{{pack.name}}</span>
-      <div>
-        <div>
-          <img src="{{pack.image.url}}" alt="alt">
-        </div>
-        <div class="products-list">
-          {% for i in pack.products.all %}
-          <p>
-            {{i}}
-          </p>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="add-btn">
-        <span>{{pack.price}}$</span>
-        <a href="cart/">
-          <img src="{%static 'assets/add.svg'%}" alt="add">
-        </a>
-      </div>
-    </div>
-    {% endfor %}
+  <div>
+    <img src="{% static 'assets/leo.png' %}" alt="leo">
   </div>
   <div class="greet-block">
     <h1><span class="highlight">Atlas</span> shop - your daily products <span class="highlight">supplier</span></h1>
@@ -72,7 +50,7 @@
   </div>
   <div>
     <h1>Join our <span>community</span></h1>
-    <div class="auth-block">
+    <div style"{} class="auth-block">
       <a href="/sign-in" class="auth-btn auth-btn-2 auth-btn-white">Sign in</a>
       <a href="/sign-up" class="auth-btn auth-btn-2 auth-btn-red">Sign up </a>
     </div>
