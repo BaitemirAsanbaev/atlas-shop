@@ -6,13 +6,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views import generic
 
 
 def index(request):
     feedback = models.Feedback.objects.all()
-
+    packs= models.Pack.objects.all()
     data = {
-        'feedback': feedback
+        'feedback': feedback,
+        'packs': packs
     }
     return render(request, 'home.html', data)
 
@@ -20,23 +22,55 @@ def index(request):
 def catalog(request):
   q = request.GET.get('q') if request.GET.get('q') != None else ''
   products = models.Products.objects.filter(category__name__icontains=q)
-  packs = models.Pack.objects.all()
+
+  new_packs = []
   categories = models.Category.objects.all()
+  packs = models.Pack.objects.all()
+  for i in packs:
+    new_packs.append(i)
   data = {
       'products': products,
       'categories': categories,
-      'packs': packs
+      'packs': new_packs,
   }
   return render(request, 'catalog.html', data)
 
-def add_product(request):
-    form = forms.ProductForm
+# def add_product(request):
+#     form = forms.ProductForm
+#     if request.method == 'POST':
+#         form = forms.ProductForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('catalog')
+#     return render(request, 'create.html', {'form': form})
+#классовый
+class ProductCreate(generic.CreateView):
+    template_name = 'create.html'
+    form_class = forms.ProductForm
+    queryset = models.Products.objects.all()
+    success_url = '/catalog/'
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super(ProductCreate, self).form_valid(form=form)
+
+def update_product(request, id):
+    product = models.Products.objects.get(id=id)
+    form = forms.ProductForm(instance=product)
     if request.method == 'POST':
-        form = forms.ProductForm(request.POST)
+        form = forms.ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
             return redirect('catalog')
-    return render(request, 'create.html', {'form': form})
+    return render(request, 'update.html', {'form': form})
+
+def delete_product(request, id):
+    product = models.Products.objects.get(id=id)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('catalog')
+    return render(request, 'delete.html', {'obj': product})
+
 
 def from_low_to_high(request):
     products = list(models.Products.objects.all())
@@ -46,7 +80,6 @@ def from_low_to_high(request):
     for i in range(n-1):
         for j in range(0, n-i-1):
             if products[j].price > products[j + 1].price:
-                swapped = True
                 products[j], products[j + 1] = products[j + 1], products[j]
 
     data = {
@@ -73,16 +106,9 @@ def from_high_to_low(request):
     return render(request, 'catalog.html', data)
 
 
-
-@login_required(login_url='sign-in')
-def cart(request):
-    print(request)
-    return render(request, 'cart.html')
-
-
 def about(request):
   if request.method == 'POST':
-    comment = models.Feedback.objects.create(author = request.user, body = request.POST.get('comment'))
+    models.Feedback.objects.create(author = request.user.first_name, body = request.POST.get('comment'))
     return redirect('home')
 
   return render(request, 'about.html')
@@ -116,15 +142,37 @@ def sign_in(request):
 
 
 def sign_up(request):
-    form = UserCreationForm()
+    form = forms.SignUpForm()
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = forms.SignUpForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
             login(request, user)
-            return redirect('home')
+            return redirect('fill')
         else:
             messages.error(request, 'Error occured')
     return render(request, 'login.html', {'form': form})
+
+
+@login_required(login_url='sign-in')
+def profile(request):
+    return render(request, 'profile.html')
+
+@login_required(login_url='sign-in')
+def edit_profile(request):
+    user = request.user
+    form = forms.SignUpForm(instance=user)
+    if request.method == 'POST':
+        form = forms.SignUpForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    return render(request, 'edit.html', {'form':form})
+
+
+@login_required(login_url='sign-in')
+def cart(request):
+    cart = models.Cart.objects.get(client = request.user)
+    return render(request, 'cart.html', {'cart':cart})

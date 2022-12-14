@@ -3,5 +3,10 @@
 {% block content %}
 <section>
   <h1>Cart</h1>
+  {% for i in cart %}
+  <div>
+    {{i.user}}
+  </div>
+  {% endfor %}
 </section>
 {% endblock %}

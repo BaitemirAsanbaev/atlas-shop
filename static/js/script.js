@@ -1,4 +1,14 @@
 cart = document.getElementById('cart')
+
+
+select = document.querySelector('#price ')
+select.addEventListener('change', (e) => {
+  e.preventDefault()
+  window.location.href = `/catalog/${e.target.value}`
+  window.scrollTo(self)
+
+})
+
 cartLink = document.getElementById('cartLink')
 
 cartLink.addEventListener('click', (e) => {
@@ -11,18 +21,10 @@ cartLink.addEventListener('click', (e) => {
   }, 1000)
 })
 
-select = document.querySelector('#price ')
-select.addEventListener('change', (e) => {
-  e.preventDefault()
-  window.location.href = `/catalog/${e.target.value}`
-
-})
-
 category = document.querySelector('#category ')
 category.addEventListener('change', (e) => {
   e.preventDefault()
   window.location.href = `/catalog/${e.target.value}`
+  window.scrollTo(self)
 
 })
-
-

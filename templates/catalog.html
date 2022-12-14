@@ -27,7 +27,7 @@
       {% endfor %}
     </select>
     <label for="category">Price</label>
-    <select  name="price" id="price">
+    <select name="price" id="price">
       <option value=""></option>
       <option value="">Standart</option>
       <option value="high-low">From high to low</option>
@@ -46,12 +46,16 @@
     <div>
       <span>{{product.price}}$</span>
       {% if request.user.is_superuser %}
-      <a href="delete/">Delete</a>
-      <a href="edit/">Edit</a>
+      <a href="delete/{{product.id}}">Delete</a>
+      <a href="update/{{product.id}}">Edit</a>
+      {% else %}
+      {% if product.is_ordered %}
+      <img style="filter: brightness(50%);" src="{%static 'assets/add.svg'%}" alt="add">
       {% else %}
       <a href="cart/">
         <img src="{%static 'assets/add.svg'%}" alt="add">
       </a>
+      {% endif %}
       {% endif %}
     </div>
   </div>
@@ -60,8 +64,20 @@
 <section class="products">
   {% for pack in packs %}
   <div class="product-card">
-    <span>{{pack.name}}</span>
-    {{pack.include.name}}
+      <span>{{pack.name}}</span>
+    <div>
+
+      <div>
+        <img src="{{pack.image.url}}" alt="alt">
+      </div>
+      <div>
+        {% for i in pack.products.all %}
+        <p>
+          {{i}}
+        </p>
+        {% endfor %}
+      </div>
+    </div>
     <div>
       <span>{{pack.price}}$</span>
       {% if request.user.is_superuser %}

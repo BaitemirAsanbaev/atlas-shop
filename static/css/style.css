@@ -100,7 +100,6 @@ section{
   flex-direction: column;
   align-items: baseline;
   max-width: 350px;
-  margin: 0 auto;
 }
 .greet-block>a{
   margin-bottom: 50px;
@@ -157,11 +156,30 @@ section{
 
 .packs{
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-between;
-  /* align-items: baseline; */
+  align-items: baseline;
+  max-height: 500px;
+  max-width: 600px;
 
 }
-.packs .main-pack{
+.packs>div:not(.main) img, .packs>div:not(.main) .add-btn, .packs>div:not(.main) .products-list{
+  display: none;
+}
+.packs>div:not(.main) span{
+  font-size: 20px;
+}
+.packs>div:not(.main){
+  cursor: pointer;
+  transition: .5s ease-in
+  ;
+  min-width: 250px;
+}
+.packs>div:not(.main):hover{
+  background-color: #FF4C4C;
+}
+/* .packs .main-pack{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -227,7 +245,7 @@ section{
   font-size: 36px;
   background-color: #FF4C4C;
   margin-top: 20px;
-}
+} */
 a{
   transition: .5s;
 }

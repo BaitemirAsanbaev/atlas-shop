@@ -3,37 +3,29 @@
 {% block content %}
 <section>
   <div class="packs">
-    <div class="main-pack">
-      <span class="title">Student pack</span>
-      <div class="info">
-        <img src="{% static 'assets/student.png' %}" alt="img">
+    {% for pack in packs %}
+    <div class="product-card pack-card">
+      <span>{{pack.name}}</span>
+      <div>
         <div>
-          <div class="items">
-            <span>Water</span>
-            <span>Doshik</span>
-            <span>Bananas</span>
-            <span>Coffee</span>
-          </div>
-          <div class="price">7$</div>
+          <img src="{{pack.image.url}}" alt="alt">
+        </div>
+        <div class="products-list">
+          {% for i in pack.products.all %}
+          <p>
+            {{i}}
+          </p>
+          {% endfor %}
         </div>
       </div>
-      <a class="add" href="student/add">Add to cart</a>
+      <div class="add-btn">
+        <span>{{pack.price}}$</span>
+        <a href="cart/">
+          <img src="{%static 'assets/add.svg'%}" alt="add">
+        </a>
+      </div>
     </div>
-    <div class="  -packs">
-      <div class="s-pack">
-        <span class="title">Party pack</span>
-        <div class="price">513$</div>
-      </div>
-      <div class="s-pack">
-        <span class="title">Family pack</span>
-        <div class="price">166$</div>
-      </div>
-      <div class="s-pack">
-        <span class="title">Luxery pack</span>
-        <div class="price">1123$</div>
-      </div>
-
-    </div>
+    {% endfor %}
   </div>
   <div class="greet-block">
     <h1><span class="highlight">Atlas</span> shop - your daily products <span class="highlight">supplier</span></h1>
@@ -87,4 +79,14 @@
   </div>
 </section>
 <script src="{% static 'js/script.js' %}"></script>
+<script>
+  pack = document.querySelectorAll('.pack-card')
+  pack.forEach(el => {
+    el.addEventListener('click',()=>{
+      el.className = 'main'
+      el.style.order = '0'
+      other=document
+    })
+  });
+</script>
 {% endblock %}

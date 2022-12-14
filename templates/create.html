@@ -1,9 +1,10 @@
+{% extends 'index.html' %}
 {% load static%}
 {% block content %}
 <section class="login">
-  <form action="" method="POST">
+  <form action="/create/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{form}}
+    {{form.as_p}}
     <input class="auth-btn auth-btn-red" type="submit" value="Add">
   </form>
 </section>

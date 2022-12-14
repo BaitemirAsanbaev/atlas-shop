@@ -21,7 +21,14 @@
   color: #fff;
   border-color: #fff;
 }
-
+#switch{
+  cursor: pointer;
+}
+#pasw{
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+}
 .login form input, .login form select{
   width: 350px;
   height: 50px;

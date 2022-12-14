@@ -1,0 +1,30 @@
+.profile>div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+  margin: 0 auto;
+}
+.profile>div>div{
+  display: flex;
+  flex-direction: column;
+}
+.profile span{
+  font-size: 32px;
+}
+.profile h1{
+  font-size: 64px;
+  margin: 10px 0px;
+  font-weight: normal;
+}
+.profile>div>div>div{
+  display: flex;
+  margin-top: 40px;
+}
+.profile>div>div>div>a>img{
+  width: 50px;
+  margin-right: 20px;;
+}
+.profile{
+  margin-top: 50px;
+}
