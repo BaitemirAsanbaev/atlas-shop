@@ -1,0 +1,37 @@
+{% extends 'index.html'%}
+{% block content %}
+<section class="login">
+  <h1>Edit info</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <label for="id_username">Username</label>
+    {{form.username}}
+    <label for="id_first_name">Name</label>
+    {{form.first_name}}
+    <label for="id_first_name">New password</label>
+    {{form.password1}}
+    <label for="id_first_name">Confirm password</label>
+    {{form.password2}}
+    <input class="auth-btn auth-btn-red" type="submit" value="Update">
+  </form>
+</section>
+<script>
+  
+// pasw = document.getElementById('pasw')
+// switchik = document.getElementById('switch')
+// opened = true
+
+// switchik.addEventListener('click', ()=>{
+//  if (opened){
+//   pasw.style.display = 'flex'
+//  }
+//  else{
+//   pasw.style.display = 'none'
+//  }
+//  opened=!opened
+
+// })
+
+
+</script>
+{% endblock %}

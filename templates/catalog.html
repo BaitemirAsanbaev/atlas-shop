@@ -65,34 +65,6 @@
   </form>
   {% endfor %}
 </section>
-<section class="products packs-list">
-  {% for pack in packs %}
-  <div class="product-card">
-    <span>{{pack.name}}</span>
-    <div class="prd-list">
-      {% for i in pack.products.all %}
-      <p>
-        {{i}}
-      </p>
-      {% endfor %}
-    </div>
-    <div>
-      <span>{{pack.price}}$</span>
-      {% if request.user.is_superuser %}
-      <a href="delete-pack/{{pack.id}}">Delete</a>
-      <a href="update-pack/{{pack.id}}">Edit</a>
-      {% else %}
-      <form method='POST'>
-        {% csrf_token %}
-        <button type="submit">
-          <img src="{%static 'assets/add.svg'%}" alt="add">
-        </button>
-      </form>
-      {% endif %}
-    </div>
-  </div>
-  {% endfor %}
-</section>
 <section class="cart">
   <div>
     <h1>Check what’s in your <span>Cart</span></h1>

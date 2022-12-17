@@ -26,9 +26,12 @@
           <li><a href="/">Home</a></li>
           <li><a href="/catalog/">Catalog</a></li>
           <li><a href="/about/">About</a></li>
+          {% if not request.user.is_superuser %}
+          <li><a href="/problem/">Have a problem?</a></li>
+          {% endif%}
           {% if request.user.is_superuser %}
           <li><a href="/create/">Add product</a></li>
-          <li><a href="/create-pack/">Add pack</a></li>
+          <li><a href="/clients/">Clients</a></li>
           {% endif %}
         </ul>
       </nav>
@@ -63,11 +66,9 @@
         <a href="/cart">Cart</a>
       </div>
       <div class="icons">
-        <img src="{%static 'assets/icon.svg'%}" alt="icon">
-        <img src="{%static 'assets/icon.svg'%}" alt="icon">
-        <img src="{%static 'assets/icon.svg'%}" alt="icon">
-        <img src="{%static 'assets/icon.svg'%}" alt="icon">
-        <img src="{%static 'assets/icon.svg'%}" alt="icon">
+        {% for i in products %}
+        <span>{{i.name}}</span>
+        {% endfor %}
       </div>
     </div>
     <div class="map">

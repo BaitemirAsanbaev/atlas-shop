@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% load static%}
+{% block content %}
+<section class="profile">
+  <div>
+    <div>
+      <span>@{{request.user}}</span>
+      <h1>{{request.user.first_name}}</h1>
+      <span>{% if request.user.is_superuser %}Admin{% else%}Client{% endif %}</span>
+      <div>
+        <a href="{% url 'edit'%}">
+          <img src="{% static 'assets/edit.svg' %}" alt="edit">
+        </a>
+        <a href="{% url 'logout'%}">
+          <img src="{% static 'assets/logout.svg' %}" alt="logout">
+        </a>
+      </div>
+    </div>
+    <div>
+      <img src="{% static 'assets/keanu.png' %}" alt="johnny">
+    </div>
+  </div>
+</section>
+
+{% endblock %}

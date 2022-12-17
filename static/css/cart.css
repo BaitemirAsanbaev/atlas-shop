@@ -5,6 +5,8 @@
 }
 .cart-list{
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   border: 2px solid #ff4c4c;
@@ -20,12 +22,18 @@
   height: 120px;
   margin: 20px;
 }
-.item span{
-}
 .item button{
   background-color: #ff4c4c;
   padding: 5px 10px;
   border: none;
   cursor: pointer;
 
+}
+.cart-div{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.order-btn{
+  margin: 20px;
 }

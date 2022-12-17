@@ -8,21 +8,10 @@ class ProductForm(ModelForm):
     model = models.Products
     fields = ['name', 'price', 'image','category']
 
-class PackForm(ModelForm): 
-  class Meta:
-    model = models.Pack
-    fields = '__all__'
-
-
 class SignUpForm(UserCreationForm):
   class Meta:
     model = User
     fields = ['username', 'first_name', 'password1', 'password2']
 
-
-class EditForm(UserCreationForm):
-  class Meta:
-    model = User
-    fields = ['username', 'first_name']
     
     

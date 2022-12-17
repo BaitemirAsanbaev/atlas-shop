@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+{% load static%}
+{% block content %}
+<section class="login">
+  <h1>Users' problems</h1>
+  <div>
+    <form method="post">
+      {% csrf_token %}
+      <label for="problem">Have a problem?</label>
+      <input type="text" name="problem" id="problem"/>
+    </form>
+  </div>
+</section>
+
+{% endblock %}

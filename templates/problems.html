@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% load static%}
+{% block content %}
+<section class="login">
+  <h1>Users' problems</h1>
+  <div>
+    {% for i in problems %}
+    <div style="margin: 20px 0;">
+      <span>{{i.user}}: </span>
+      <span style="margin-left: 10px;">"{{i.problem}}"</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,1 @@
+setTimeout(()=>{window.location.href('/clear-problems')}, 260_000)
