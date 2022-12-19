@@ -8,6 +8,7 @@ urlpatterns = [
   path('edit/', views.logout_user, name='edit-profile'),
   path('', views.index, name='home'),
   path('catalog/', views.catalog, name='catalog'),
+  path('add-category/', views.add_category, name='add-category'),
   path('create/', views.ProductCreate.as_view(), name='create'),
   path('catalog/update/<int:id>', views.update_product, name='update'),
   path('catalog/delete/<int:id>', views.delete_product, name='delete'),

@@ -49,6 +49,12 @@ class ProductCreate(generic.CreateView):
         print(form.cleaned_data)
         return super(ProductCreate, self).form_valid(form=form)
 
+def add_category(request):
+    form = forms.CategoryForm()
+    if request.method == 'POST':
+        models.Category.objects.create(name=request.POST.get('name'))
+        return redirect('create')
+    return render(request, 'add-category.html', {'form': form})
 
 def update_product(request, id):
     product = models.Products.objects.get(id=id)
@@ -204,7 +210,7 @@ def clients(request):
 @login_required(login_url='sign-in')
 def problem(request):
     if request.method == 'POST':
-        models.Problems.objects.create(user=request.user.first_name, problem=request.POST.get('problem'))
+        models.Problems.objects.create(user=request.user.first_name, problem=request.POST.get('problema'))
         return redirect('home')
 
     return render(request, 'feedback.html')

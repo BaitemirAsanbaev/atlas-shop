@@ -23,22 +23,25 @@
       </div>
       <nav>
         <ul>
+          {% if not request.user.is_superuser %}
           <li><a href="/">Home</a></li>
+          {% endif %}
           <li><a href="/catalog/">Catalog</a></li>
           <li><a href="/about/">About</a></li>
           {% if not request.user.is_superuser %}
           <li><a href="/problem/">Have a problem?</a></li>
-          {% endif%}
-          {% if request.user.is_superuser %}
+          {% else %}
           <li><a href="/create/">Add product</a></li>
           <li><a href="/clients/">Clients</a></li>
           {% endif %}
         </ul>
       </nav>
       <div class="extra-icon">
+        {% if not request.user.is_superuser %}
         <a href="{% url 'cart' %}">
           <img src="{% static 'assets/cart.svg' %}" alt="cart">
         </a>
+        {% endif %}
         {% if request.user.is_authenticated%}
         <a href="{% url 'profile' %}">
           <img src="{% static 'assets/login.svg' %}" alt="profile">
@@ -64,11 +67,6 @@
         <a href="/login">Sign in</a>
         <a href="/login/">Sign up</a>
         <a href="/cart">Cart</a>
-      </div>
-      <div class="icons">
-        {% for i in products %}
-        <span>{{i.name}}</span>
-        {% endfor %}
       </div>
     </div>
     <div class="map">

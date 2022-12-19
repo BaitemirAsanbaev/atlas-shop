@@ -29,6 +29,7 @@
   animation: about 3s infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
   cursor: pointer;
   transition: .5s;
+  margin-bottom: 20px;
 }
 .about img:first-child:hover{
   filter: brightness(80%);
