@@ -1,10 +1,10 @@
 import os
 from pathlib import Path
-
+from .key import secret
 SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-5(urmk%vp+im@@4sc@m506trg-*8_&r8t*n1nmxa%*z_m!5xh='
+SECRET_KEY = secret
 
 DEBUG = True
 
